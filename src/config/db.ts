@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { env } from './env';
+import { env } from './env.js';
 
 const connectDB = async () => {
   const { HOST_USERNAME, HOST_PASSWORD, HOST_DATABASE, HOST_CLUSTER } = env;
