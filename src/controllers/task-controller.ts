@@ -1,11 +1,13 @@
 import type { Request, Response } from 'express';
 import { ZodError } from 'zod';
+import { changeTasksCompletionSchema } from '../schemas/change-task-completion-schema.js';
 import { createTaskSchema } from '../schemas/create-task-schema.js';
 import {
   updateTaskBodySchema,
   updateTaskParamsSchema,
 } from '../schemas/update-task-schemas.js';
 import TaskService from '../services/index.js';
+import tasksServices from '../services/tasks-services.js';
 import { handleValidationError } from '../utils/validation-errors.js';
 
 class TaskControllerClass {
@@ -85,6 +87,21 @@ class TaskControllerClass {
         error: error.message,
       });
     }
+  }
+
+  async changeTaskCompletion(req: Request, res: Response) {
+    try {
+      const params = changeTasksCompletionSchema.parse(req.params);
+
+      const { id } = params;
+
+      const taskCompleted = await tasksServices.changeTasksCompletion({ id });
+
+      res.status(200).json({
+        message: 'Tarefa atualizada com sucesso!',
+        task: taskCompleted,
+      });
+    } catch (_error) {}
   }
 }
 
