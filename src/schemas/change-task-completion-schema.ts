@@ -1,5 +1,5 @@
 import { z } from 'zod';
 
 export const changeTasksCompletionSchema = z.object({
-  id: z.string().min(1, { message: 'ID inválido' }),
+  id: z.string().length(24, { message: 'O id deve conter 24 caracteres.' }),
 });
